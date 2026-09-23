@@ -41,7 +41,9 @@ def fetch_from_psi():
                 name = to_fix[name]
             names.append(name)
 
+    names = list(set(names))  # remove duplicates
     names.sort(key=lambda s: s.split(maxsplit=1)[1].casefold())
+
     return names
 
 
@@ -123,3 +125,8 @@ async def read_author(request: Request, lastname):
     result = get_names(lastname)
     return templates.TemplateResponse("main.html", context={"request": request, "result": result})
 
+if __name__ == "__main__":
+    res = get_names()
+    print()
+    for key, value in res.items():
+        print(f"{key}:\n {value}\n")
